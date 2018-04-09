@@ -1,0 +1,35 @@
+<section>
+    VmInclude:__COMPONENT__/grid/grid.v3.html
+</section>
+<script>
+    function F__ID(){
+        //-------------------------------------
+        VmInclude:__COMPONENT__/grid/grid.v3.js
+		_json='';
+		$('#new__ID').hide();
+		$('#save__ID').hide();
+		$('#keyword__ID').hide();
+        //-------------------------------------
+		var fields="Phone_Number,Email";
+        _fields=fields;
+        //-------------------------------------
+        $('#D__ID').on('load',function(){  _set_req(); _request_data();  })
+        //-------------------------------------
+		var _set_req=_set_req_export=function(){
+			var sql="with tb1 as (select ID, Phone_NumberA=@('Phone_Number'),EmailA=@('Email') from [TABLE-91000087] )";
+			sql+=",tb2 as (select Phone_NumberB=@('Phone_Number'),EmailB=@('Email') from [TABLE-20008858] )";
+			sql+=", tb as (select ID,Phone_Number=Phone_NumberA,Email=EmailA,RowNum=row_number() over (order by ID DESC) from tb1 join tb2 on Phone_NumberA=Phone_NumberB and EmailA=EmailB) ";
+			sql+=" select Phone_Number, Email,RowNum from tb where RowNum between @I6 and @I7";
+
+			var sql_n="with tb1 as (select ID, Phone_NumberA=@('Phone_Number'),EmailA=@('Email') from [TABLE-91000087] )";
+			sql_n+=",tb2 as (select Phone_NumberB=@('Phone_Number'),EmailB=@('Email') from [TABLE-20008858] )";
+			sql_n+=", tb as (select ID,Phone_Number=Phone_NumberA,Email=EmailA,RowNum=row_number() over (order by ID DESC) from tb1 join tb2 on Phone_NumberA=Phone_NumberB and EmailA=EmailB) ";
+			sql_n+="select count(ID) from tb";
+			_req={cmd:'query_records',db_pid:_db_pid,sql:sql,sql_n:sql_n,s1:'"'+$('#keyword__ID').val()+'"',I:$('#I__ID').text(),page_size:$('#page_size__ID').val()}
+		}
+		//-------------------------------------
+    }
+</script>
+<style>
+    VmInclude:__COMPONENT__/grid/grid.v3.css
+</style>
