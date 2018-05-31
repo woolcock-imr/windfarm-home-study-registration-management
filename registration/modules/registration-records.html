@@ -7,10 +7,18 @@
         VmInclude:__COMPONENT__/grid/grid.v3.js
 		_json='';
         //-------------------------------------
-		var fields="First_Name,Last_Name,Phone_Number,Email,Postcode,Suburb";
+		var fields="Registration ID|UID,First_Name,Last_Name,Phone_Number,Email,Postcode,Suburb";
         _fields="_Form,"+fields+",Submit Date|DateTime,Submitted by|Author";
         //-------------------------------------
         $('#D__ID').on('load',function(){  _set_req(); _request_data();  })
+        //-------------------------------------
+        _cell_render=function(records,I,field,td,set_value,source){
+            switch(field){
+				case 'UID':
+                    records[I].vm_readonly[field]=true;
+                	break;
+            }
+        }
         //-------------------------------------
     }
 </script>
